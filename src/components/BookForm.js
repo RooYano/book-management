@@ -39,5 +39,43 @@ const BookForm = (props) => {
             errorMsg = 'Please fill out all the fields.';
         }
         setErrorMsg(errorMsg);
+    };
+
+    const handleInputChange = (event) => {
+        const { name,value } = event.target;
+        switch(name) {
+            case 'quantity':
+                if (value ==='' || parseInt(value) === +value) {
+                    setBook((prevState) => ({
+                        ...prevState,
+                        [name]: value
+                    }));
+                }
+                break;
+            case 'price':
+                if (value === '' || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
+                    setBook((prevState) => ({
+                        ...prevState,
+                        [name]: value
+                    }));
+                }
+                break;
+
+            default:
+                setBook((prevState) => ({
+                    ...prevState,
+                    [name]: value
+                }));
+
+        }
     }
-}
+    
+    return (
+        <div className='main-form'>
+            {errorMsg && <p className='errorMsg'>{errorMsg}</p>}
+            <Form onSubmit={handleOnSubmit}>
+                
+            </Form>
+
+        </div>
+    )
