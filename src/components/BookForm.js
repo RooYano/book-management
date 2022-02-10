@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
+
+// usestate hook to create object for the state
+// ternary to check if props is a book object
 const BookForm = (props) => {
     const [book, setBook] = useState({
         bookname: props.book ? props.book.bookname : '',
@@ -42,7 +45,7 @@ const BookForm = (props) => {
     };
 
     const handleInputChange = (event) => {
-        const { name,value } = event.target;
+        const { name,value } = event.target; //event.target.name and event.target.value from form input
         switch(name) {
             case 'quantity':
                 if (value ==='' || parseInt(value) === +value) {
@@ -53,7 +56,7 @@ const BookForm = (props) => {
                 }
                 break;
             case 'price':
-                if (value === '' || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
+                if (value === '' || value.match(/^\d{1,}(\.\d{0,2})?$/)) { // check to see if value is a decimal before updating state
                     setBook((prevState) => ({
                         ...prevState,
                         [name]: value
@@ -74,8 +77,43 @@ const BookForm = (props) => {
         <div className='main-form'>
             {errorMsg && <p className='errorMsg'>{errorMsg}</p>}
             <Form onSubmit={handleOnSubmit}>
-                
+                <Form.Group controlId='name'>
+                    <Form.Label>Book Name</Form.Label>
+                    <Form.Control
+                        className='input-control'
+                        type='text'
+                        name='author'
+                        value={author}
+                        placeholder='Enter name of author'
+                        onChange={handleInputChange} 
+                    />
+                </Form.Group>
+                <Form.Group controlId='quantity'>
+                    <Form.Control   
+                        className='input-control'
+                        type='number'
+                        name='quantity'
+                        value={quantity}
+                        placeholder='Enter available quanitity'
+                        onChange={handleInputChange}
+                    />
+                </Form.Group>
+                <Form.Group controlId='price'>
+                    <Form.Control   
+                        className='input-control'
+                        type='text'
+                        name='price'
+                        value={price}
+                        placeholder='Enter price of book'
+                        onChange={handleInputChange}
+                    />
+                </Form.Group>
+                <Button variant='primary' type='submit' className='submit-btn'>
+                    Submit
+                </Button>
             </Form>
-
         </div>
-    )
+    );
+};
+
+export default BookForm;
